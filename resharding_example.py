@@ -52,8 +52,8 @@ network.state = read_ckpt(network.state, "gs://eu-projv/mesh_jax_pile_6B_rotary_
 # move the state to CPU/system memory so it's not duplicated by xmap
 network.state = jax.device_put(network.state, jax.devices("cpu")[0])
 
-def infer(context, top_k=30, top_p=0.9, temp=1.0, gen_len=64):
-    tokens = tokenizer.encode(context)
+def infer(context, top_k=40, top_p=0.9, temp=1.0, gen_len=512):
+  tokens = tokenizer.encode(context)
 
     provided_ctx = len(tokens)
     pad_amount = seq - provided_ctx
@@ -75,4 +75,4 @@ def infer(context, top_k=30, top_p=0.9, temp=1.0, gen_len=64):
     return samples
 
 
-infer("EleutherAI is")
+print(infer("EleutherAI is"))
